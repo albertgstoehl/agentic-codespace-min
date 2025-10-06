@@ -37,6 +37,11 @@ Wait for user confirmation.
 
 ### Step 3: Phase-by-Phase Implementation
 
+**Checkpointing**: Before starting implementation, note that you can use checkpointing for safe experimentation:
+- Code state is automatically saved before changes
+- Tap Esc twice or use `/rewind` command to instantly rewind
+- This enables pursuing more ambitious implementations with confidence
+
 For each phase:
 
 #### A. Announce Phase Start
@@ -60,6 +65,11 @@ Running verification:
 ✓ npm run typecheck
 ✓ npm run lint
 ```
+
+**Hooks**: If you have hooks configured (e.g., automatic test running), they may execute automatically. Hooks can:
+- Automatically run test suites after code changes
+- Perform linting before commits
+- Provide event-driven quality enforcement
 
 Show results to the user.
 

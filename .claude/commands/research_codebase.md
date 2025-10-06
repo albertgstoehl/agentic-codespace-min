@@ -27,9 +27,13 @@ Then wait for the user's research query.
 - Create a research plan using TodoWrite to track all subtasks
 - Consider which directories, files, or architectural patterns are relevant
 
+**Context Engineering**: Treat context as a finite resource. Focus on gathering the minimal set of high-signal information needed to answer the user's question comprehensively.
+
 ### Step 2: Spawn Parallel Sub-Agent Tasks
 
 **Create multiple Task agents to research different aspects concurrently.**
+
+Use parallel subagent execution to maximize efficiency and keep main context clean. Launch all independent research tasks simultaneously using multiple Task tool calls in a single message.
 
 We have specialized agents available:
 - Use the `codebase-locator` agent to find relevant files and locations
@@ -38,6 +42,12 @@ We have specialized agents available:
 - Use the `test-pattern-finder` agent to understand testing approaches
 
 **IMPORTANT:** All agents are documentarians, not critics. They will describe what exists without suggesting improvements or identifying issues.
+
+**Subagent Design Principles**:
+- Each agent has a focused, single responsibility
+- Agents work independently and can run in parallel
+- Results are synthesized by the main research agent
+- Just-in-time context retrieval - agents fetch only what they need
 
 Example Task spawning:
 ```

@@ -4,11 +4,12 @@ Minimal Codespaces setup for AI-assisted development using HumanLayer's research
 
 ## What This Is
 
-A clean foundation for working with Claude Code using context engineering principles:
+A secure, sandboxed foundation for working with Claude Code using context engineering principles:
 - ✅ Research codebase patterns before coding
 - ✅ Create detailed, phase-by-phase plans
 - ✅ Implement with verification at each step
 - ✅ Manual control - you approve each phase
+- ✅ Network firewall - restricts access to approved domains only
 - ✅ No autonomous loops - you're in charge
 
 ## Setup
@@ -23,6 +24,12 @@ Click "Code" → "Create codespace on main"
 
 ### 3. Rebuild Container
 After adding the secret, rebuild: **Ctrl/Cmd+Shift+P** → "Rebuild Container"
+
+The container will:
+- Build a secure development environment with Node.js 20
+- Install Claude Code and development tools
+- Configure network firewall to restrict outbound connections
+- Set up zsh with powerline10k theme
 
 ### 4. Verify Setup
 ```bash
@@ -116,8 +123,12 @@ claude edit src/auth/
 ```
 .claude/
   commands/          # Workflow commands
-  agents/            # Specialized subagents
   CLAUDE.md          # Repository context
+
+.devcontainer/
+  Dockerfile         # Container with Node 20, firewall tools, Claude Code
+  devcontainer.json  # VS Code container configuration
+  init-firewall.sh   # Network security rules
 
 thoughts/
   research/          # Research documents
@@ -135,6 +146,34 @@ During research, Claude uses these agents to keep context clean:
 - **test-pattern-finder**: Finds testing patterns
 
 You don't call these directly - they're used automatically during research.
+
+## Security Features
+
+### Network Firewall
+
+The devcontainer includes an automatic firewall (`init-firewall.sh`) that restricts network access to only approved domains:
+
+**Allowed Domains:**
+- **GitHub**: Web, API, and Git operations
+- **npm**: Package registry (`registry.npmjs.org`)
+- **Anthropic**: API access (`api.anthropic.com`)
+- **VS Code**: Marketplace and updates
+- **Telemetry**: Sentry, Statsig (for Claude Code)
+- **Local Network**: Host machine and container network
+
+**Blocked:** All other outbound connections
+
+The firewall uses `iptables` and `ipset` to enforce these rules. It automatically initializes on container start and verifies proper configuration.
+
+### Why This Matters
+
+Network isolation provides:
+- **Security**: Prevents unintended external connections
+- **Control**: You know exactly what domains Claude Code can access
+- **Transparency**: Firewall script is readable and modifiable
+- **Verification**: Automatic tests confirm firewall is working
+
+To modify allowed domains, edit `.devcontainer/init-firewall.sh` and rebuild the container.
 
 ## Example Session
 
@@ -245,6 +284,30 @@ for dep in $(npm outdated --json | jq -r 'keys[]'); do
 done
 ```
 
+## Container Features
+
+The devcontainer includes:
+
+**Tools:**
+- Node.js 20 (LTS)
+- Claude Code (latest)
+- Git with delta (better diffs)
+- GitHub CLI (`gh`)
+- Zsh with powerline10k theme
+- fzf (fuzzy finder)
+- jq (JSON processor)
+- Editors: nano (default), vim
+
+**Security:**
+- Network firewall with domain whitelisting
+- Non-root user (`node`) with limited sudo access
+- iptables and ipset for packet filtering
+
+**Persistence:**
+- Bash/zsh history across sessions
+- Claude config stored in volume
+- Workspace mounted with delegated consistency
+
 ## Troubleshooting
 
 **"Command not found: claude"**
@@ -267,11 +330,28 @@ npm i -g @anthropic-ai/claude-code
 - Rollback the phase and adjust approach
 - Consider re-running research
 
+**"Firewall blocking legitimate domain"**
+- Edit `.devcontainer/init-firewall.sh`
+- Add domain to the allowed list
+- Rebuild container: **Ctrl/Cmd+Shift+P** → "Rebuild Container"
+
+**"Container build failing"**
+- Check Docker/Codespaces logs for specific errors
+- Ensure `NET_ADMIN` and `NET_RAW` capabilities are available
+- Verify all build arguments are set correctly
+
 ## Learn More
 
-- [Claude Code Best Practices](https://www.anthropic.com/engineering/claude-code-best-practices)
-- [Advanced Context Engineering](https://github.com/humanlayer/advanced-context-engineering-for-coding-agents)
-- [HumanLayer Repo](https://github.com/humanlayer/humanlayer) (source of these workflows)
+### Anthropic Resources
+- [Claude Code Best Practices](https://www.anthropic.com/engineering/claude-code-best-practices) - Core agentic coding workflows
+- [Effective Context Engineering for AI Agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) - How to optimize context usage
+- [Writing Effective Tools for AI Agents](https://www.anthropic.com/engineering/writing-tools-for-agents) - Tool design principles
+- [Enabling Claude Code to Work More Autonomously](https://www.anthropic.com/news/enabling-claude-code-to-work-more-autonomously) - Subagents, checkpointing, hooks
+- [How Anthropic Teams Use Claude Code](https://www.anthropic.com/news/how-anthropic-teams-use-claude-code) - Real-world usage patterns
+
+### Community Resources
+- [HumanLayer's Advanced Context Engineering for Coding Agents](https://github.com/humanlayer/advanced-context-engineering-for-coding-agents/blob/main/ace-fca.md) - Detailed context engineering approach
+- [HumanLayer Repo](https://github.com/humanlayer/humanlayer) - Source of workflow patterns
 
 ## License
 

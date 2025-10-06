@@ -32,6 +32,10 @@ Use extended thinking for complex tasks:
 - For medium complexity: "think hard about the implementation approach"
 - For complex tasks: "ultrathink about the implementation strategy, edge cases, and testing"
 
+**Research → Plan → Implement**: This workflow significantly improves outcomes. Claude performs better when explicitly asked to research and plan before coding, especially for problems requiring deeper thinking upfront.
+
+**Context Engineering**: Keep plans focused with minimal high-signal information. Break complex tasks into 3-7 phases to maintain clarity and actionability.
+
 ### Step 3: Decompose into Phases
 
 Break the work into 3-7 clear phases:
@@ -39,6 +43,13 @@ Break the work into 3-7 clear phases:
 - Each phase should take < 5-10 minutes to implement
 - Each phase must have specific verification steps
 - Each phase must have rollback instructions
+
+**Test-Driven Development**: When creating plans for testable features, consider a TDD approach:
+1. Phase 1: Write tests first (they should fail initially)
+2. Phase 2+: Implement functionality to pass tests
+3. Use subagents to verify implementation isn't overfitting
+
+Be explicit in the plan that you're doing TDD so Claude avoids creating mock implementations.
 
 ### Step 4: Generate Implementation Plan
 
