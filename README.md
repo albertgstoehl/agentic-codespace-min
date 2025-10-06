@@ -6,16 +6,23 @@ Ultra-minimal Codespaces base for **self-running coding agents** with guardrails
 - Timeboxed loop + step cap
 
 ## Quick start (Codespaces)
-1. Create a Codespace on your **personal repo**.
-2. Add Codespaces Secrets (GitHub → Settings → Codespaces → Secrets):
-   - `ANTHROPIC_API_KEY` (required)
-   - `OPENAI_API_KEY` (optional)
-3. Rebuild container.
-4. In terminal:
+
+### Option A: Account-based Authentication (Recommended)
+1. Create a Codespace on your **personal repo**
+2. In the Codespace terminal, authenticate CLIs:
    ```bash
-   make smoke
-   make loop GOAL="upgrade DX slightly"
+   claude login    # Opens browser for Anthropic account login
+   codex login     # Opens browser for OpenAI account login (if using)
    ```
+3. Test with: `make smoke`
+4. Run agent: `make loop GOAL="upgrade DX slightly"`
+
+### Option B: API Key Authentication
+1. Add Codespaces Secrets (GitHub → Settings → Codespaces → Secrets):
+   - `ANTHROPIC_API_KEY` (for direct API access)
+   - `OPENAI_API_KEY` (optional)
+2. Set up in terminal or use directly in scripts
+3. Run: `make smoke && make loop GOAL="upgrade DX slightly"`
 
 **YOLO mode note**: Claude Code supports skipping confirmations (dangerous). We're giving it auto-approval by design but blocking obvious footguns and isolating changes in `agent-run`. For tighter sandboxing, run in Codespaces and keep secrets minimal.
 
