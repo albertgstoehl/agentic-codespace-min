@@ -1,0 +1,21 @@
+{
+  "name": "agentic-codespace-min",
+  "image": "mcr.microsoft.com/devcontainers/base:jammy",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": { "version": "lts" },
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/common-utils:2": { "installZsh": false }
+  },
+  "postCreateCommand": "npm i -g @anthropic-ai/claude-code @openai/codex || true",
+  "customizations": {
+    "vscode": {
+      "settings": { "terminal.integrated.defaultProfile.linux": "bash" }
+    }
+  },
+  "remoteEnv": {
+    "AGENT_MAX_STEPS": "30",
+    "AGENT_TIMEBOX_MIN": "20",
+    "AGENT_BRANCH": "agent-run",
+    "AGENT_LOG_DIR": ".agent-logs"
+  }
+}

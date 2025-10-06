@@ -1,0 +1,4 @@
+node_modules/
+.agent-logs/
+.env
+.DS_Store
