@@ -25,5 +25,4 @@ Inspired by Willison's agentic loops: run tools **in a loop** toward a clear goa
 
 ## Links
 
-* Designing agentic loops (Simon Willison, Sep 30, 2025)
-* GitHub Pro free Codespaces quota (core-hours/storage)
+* [Designing agentic loops (Simon Willison, Sep 30, 2025)](https://simonwillison.net/2025/Sep/30/designing-agentic-loops/)
