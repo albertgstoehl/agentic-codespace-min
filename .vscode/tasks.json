@@ -1,0 +1,20 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Check Claude Setup",
+      "type": "shell",
+      "command": "claude --version && echo 'Claude Code is ready!' || echo 'Claude Code not found. Run: npm i -g @anthropic-ai/claude-code'"
+    },
+    {
+      "label": "List Research Documents",
+      "type": "shell",
+      "command": "ls -lh thoughts/research/ 2>/dev/null || echo 'No research documents yet'"
+    },
+    {
+      "label": "List Plans",
+      "type": "shell",
+      "command": "ls -lh thoughts/plans/ 2>/dev/null || echo 'No plans yet'"
+    }
+  ]
+}
