@@ -1,11 +1,12 @@
 {
-  "name": "agentic-codespace-min",
+  "name": "agentic-codespace-base",
+  "version": "1.0.0",
   "private": true,
   "license": "MIT",
   "scripts": {
-    "smoke": "bash scripts/smoke.sh",
-    "agent": "bash scripts/agent.sh",
-    "loop": "bash scripts/loop.sh",
-    "sandbox": "bash scripts/sandbox.sh"
-  }
+    "check": "echo 'Checking Claude setup...' && claude --version || echo 'Install with: npm i -g @anthropic-ai/claude-code'",
+    "research": "ls -lh thoughts/research/",
+    "plans": "ls -lh thoughts/plans/"
+  },
+  "keywords": ["ai", "claude-code", "agents", "context-engineering"]
 }
